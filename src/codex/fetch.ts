@@ -277,6 +277,9 @@ export function create(): typeof fetch {
     input: RequestInfo | URL,
     init?: RequestInit,
   ): Promise<Response> {
+
+    await accounts.reload();
+    
     const parsed =
       input instanceof URL
         ? input

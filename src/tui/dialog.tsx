@@ -42,10 +42,17 @@ export function showAccounts(api: TuiPluginApi): void {
         })}
         onSelect={async (option) => {
           if (typeof option.value !== 'string') return;
+
           if (option.value !== activeId) {
+            // Persist the selected account so the server process sees it.
+            await accounts.activate(option.value);
+
+            // Also update the TUI immediately.
             selection.select(option.value);
-            void activeNow();
+
+            await activeNow();
           }
+
           dialog.clear();
         }}
       />
